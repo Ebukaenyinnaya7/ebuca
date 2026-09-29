@@ -1,0 +1,115 @@
+.skills {
+  width: min(1200px, 100%);
+  margin: 0 auto 50px;
+  padding: clamp(36px, 6vw, 72px) clamp(20px, 4vw, 48px);
+}
+
+.skills .head {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.skills .content {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(16px, 2.5vw, 30px);
+  padding-top: 16px;
+}
+
+.skills .content .box {
+  min-width: 0;
+  min-height: 220px;
+  padding: 26px 20px;
+  border: 1px solid rgba(0, 217, 255, 0.65);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #123b5d, #0c2d4a);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.16);
+  color: #ffffff;
+  text-decoration: none;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.skills .content .box:hover,
+.skills .content .box:focus-visible {
+  transform: translateY(-7px);
+  border-color: #72edff;
+  box-shadow: 0 20px 46px rgba(0, 153, 220, 0.18);
+}
+
+.skills .content .box:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.skills .content .box .intro h5 {
+  margin: 0 0 16px;
+  color: #f5fcff;
+  font-size: clamp(20px, 2vw, 24px);
+  text-align: left;
+}
+
+.skills .content .box .intro p {
+  color: #c2d7e7;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.explore-skills-wrap {
+  margin-top: 34px;
+  text-align: center;
+}
+
+.explore-skills {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px solid rgba(0, 217, 255, 0.5);
+  border-radius: 999px;
+  color: #dffaff;
+  font-weight: 600;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.explore-skills:hover,
+.explore-skills:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(0, 217, 255, 0.1);
+}
+
+@media (max-width: 900px) {
+  .skills .content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .skills .content .box {
+    min-height: 190px;
+  }
+}
+
+@media (max-width: 520px) {
+  .skills {
+    padding: 38px 18px;
+  }
+
+  .skills .head {
+    margin-bottom: 22px;
+  }
+
+  .skills .content {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .skills .content .box {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .skills .content .box .intro p {
+    font-size: 14px;
+  }
+}

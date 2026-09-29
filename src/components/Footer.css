@@ -1,0 +1,78 @@
+.footer {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px) clamp(18px, 4vw, 48px);
+}
+.footer .content {
+  width: 100%;
+  margin-bottom: clamp(32px, 5vw, 50px);
+}
+.footer .content h2 {
+  max-width: 680px;
+  font-size: clamp(34px, 5vw, 52px);
+  margin-bottom: 20px;
+}
+.footer .content p {
+  font-size: clamp(17px, 2.4vw, 24px);
+  line-height: 1.6;
+}
+.footer .middle {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: clamp(32px, 5vw, 50px);
+}
+.footer .middle .line {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 2px;
+  background-color: #b0b0b0;
+}
+.footer .middle .center {
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+  gap: 10px;
+  align-items: center;
+}
+.footer .middle .center p {
+  color: #00d9ff;
+}
+.footer .middle img {
+  height: 100%;
+}
+.footer .foot .info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.footer .foot .info a {
+  color: #cce7f6;
+  overflow-wrap: anywhere;
+  transition: color 180ms ease;
+}
+.footer .foot .info a:hover,
+.footer .foot .info a:focus-visible {
+  color: #00d9ff;
+}
+.footer .foot > p {
+  line-height: 1.6;
+}
+@media (max-width: 620px) {
+  .footer .content h2 {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+  .footer .content p {
+    font-size: 18px;
+  }
+  .footer .foot .info {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .footer .foot .info > i {
+    display: none;
+  }
+}

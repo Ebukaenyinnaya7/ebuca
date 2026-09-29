@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  min-width: 320px;
+  font-family: Arial, sans-serif;
+  background: #071a2f;
+  color: #ffffff;
+}
+img {
+  max-width: 100%;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  font-family: inherit;
+}
+p {
+  color: #b0b0b0;
+}
