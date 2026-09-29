@@ -9,6 +9,7 @@ const WHATSAPP_MESSAGE = "Hi Ebuca I want to create a website";
 function Contact() {
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -20,6 +21,7 @@ function Contact() {
 
     setIsSubmitting(true);
     setSubmissionStatus("idle");
+    setSubmissionError("");
 
     try {
       const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
@@ -35,15 +37,23 @@ function Contact() {
           _template: "table",
         }),
       });
-      const result = await response.json();
+      const responseText = await response.text();
+      let result;
+
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        throw new Error("The email service returned an unreadable response.");
+      }
 
       if (!response.ok || !(result.success === true || result.success === "true")) {
-        throw new Error(result.message || "The message could not be submitted.");
+        throw new Error(result.message || result.error || "The message could not be submitted.");
       }
 
       form.reset();
       setSubmissionStatus("success");
-    } catch {
+    } catch (error) {
+      setSubmissionError(error instanceof Error ? error.message : "Please try again.");
       setSubmissionStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -92,8 +102,7 @@ function Contact() {
                     className="contact-detail-value"
                     href={`https://wa.me/${phone.replace("+", "")}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
                     key={phone}
-                    target="_blank"
-                    rel="noreferrer"
+                    aria-label={`Open WhatsApp chat to ${phone}`}
                   >
                     {phone.replace(/(\+234)(\d{3})(\d{3})(\d{4})/, "$1 $2 $3 $4")}
                   </a>
@@ -150,7 +159,7 @@ function Contact() {
               {submissionStatus === "success" && "Submitted! Your request was received."}
               {submissionStatus === "error" && (
                 <>
-                  We couldn’t submit your message. Please try again or email{" "}
+                  We couldn’t submit your message: {submissionError} Please try again or email{" "}
                   <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
                 </>
               )}
