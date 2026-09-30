@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Skills from "./components/Skills";
+import ContactCTA from "./components/ContactCTA";
 import Footer from "./components/Footer";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Abouts from "./Abouts";
@@ -16,6 +17,7 @@ function Home() {
       <Hero />
       <About />
       <Skills />
+      <ContactCTA />
     </>
   );
 }

@@ -26,7 +26,7 @@
   width: 50%;
 }
 .about .container .content .left p {
-  font-size: 18px;
+  font-size: 28px;
   line-height: 150%;
   font-weight: 400;
 }
@@ -37,6 +37,30 @@
   width: 100%;
   border-radius: 16px;
   display: block;
+}
+.about-more-wrap {
+  margin-top: 30px;
+  text-align: center;
+}
+.about-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid rgba(0, 217, 255, 0.65);
+  border-radius: 999px;
+  color: #dffaff;
+  font-weight: 600;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+.about-more-link:hover,
+.about-more-link:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(0, 217, 255, 0.12);
+}
+.about-more-link:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
 }
 
 @media (max-width: 820px) {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./About.css";
 
 function About() {
@@ -29,6 +30,11 @@ function About() {
           <div className="right">
             <img src="/images/coding.jpg" alt="" />
           </div>
+        </div>
+        <div className="about-more-wrap">
+          <Link className="about-more-link" to="/abouts">
+            Learn more <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
     </div>

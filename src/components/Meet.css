@@ -50,7 +50,11 @@
   overflow: hidden;
   border: 1px solid rgba(0, 217, 255, 0.2);
   border-radius: 24px;
-  background: radial-gradient(ellipse at 50% 40%, rgba(0, 133, 255, 0.2), rgba(7, 26, 47, 0.35) 70%);
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(0, 133, 255, 0.2),
+    rgba(7, 26, 47, 0.35) 70%
+  );
 }
 
 .meet .right img {
@@ -72,6 +76,7 @@
   .meet {
     padding-right: 16px;
     padding-left: 16px;
+    flex-wrap: wrap;
   }
 
   .meet > h3 {
@@ -82,10 +87,13 @@
   .meet-content {
     grid-template-columns: minmax(0, 1.2fr) minmax(110px, 0.8fr);
     gap: 12px;
+    flex-wrap: wrap-reverse;
+    display: flex;
   }
 
   .meet .left {
     padding: 16px;
+    width: 100%;
   }
 
   .meet .left p {
@@ -100,6 +108,7 @@
   .meet .right {
     min-height: 220px;
     padding: 10px;
+    width: 100%;
   }
 
   .meet .right-caption {
