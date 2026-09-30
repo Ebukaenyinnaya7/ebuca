@@ -1,21 +1,46 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 import "./Contact.css";
 
 const CONTACT_EMAIL = "ebukaenyinnaya7@gmail.com";
 const CONTACT_PHONES = ["+2347078399802", "+2347013446978"];
 const GITHUB_URL = "https://github.com/Ebukaenyinnaya7";
 const WHATSAPP_MESSAGE = "Hi Ebuca I want to create a website";
+const EMAILJS_SERVICE_ID = "service_ijuz5a8";
+const EMAILJS_TEMPLATE_ID = "3lowqkd";
+const EMAILJS_PUBLIC_KEY = "56127VtT7fxru0K0l";
 
 function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [replyTo, setReplyTo] = useState("");
-  const [searchParams] = useSearchParams();
-  const wasSubmitted = searchParams.get("submitted") === "1";
-  const successRedirect = new URL("/contact?submitted=1", window.location.origin).href;
+  const [status, setStatus] = useState({ type: "", message: "" });
 
-  function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
     setIsSubmitting(true);
+    setStatus({ type: "", message: "" });
+
+    try {
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        form,
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
+      form.reset();
+      setStatus({
+        type: "success",
+        message: "Thanks — your message was sent successfully. I’ll get back to you soon.",
+      });
+    } catch (error) {
+      console.error("EmailJS contact form error:", error);
+      setStatus({
+        type: "error",
+        message: "Your message couldn’t be sent. Please try again in a moment or email Ebuka directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -83,18 +108,8 @@ function Contact() {
           <span className="contact-form-kicker">YOUR MESSAGE</span>
           <h2 id="contact-form-title">What’s on your mind?</h2>
           <form
-            action={`https://formsubmit.co/${CONTACT_EMAIL}`}
-            method="POST"
             onSubmit={handleSubmit}
           >
-            <input type="hidden" name="_subject" value="New EBUCA portfolio enquiry" />
-            <input type="hidden" name="_replyto" value={replyTo} />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_next" value={successRedirect} />
-            <label className="contact-honeypot" aria-hidden="true">
-              Leave this field empty
-              <input type="text" name="_honey" tabIndex={-1} autoComplete="off" />
-            </label>
             <div className="contact-field-row">
               <label>
                 Your name
@@ -106,7 +121,6 @@ function Contact() {
                   type="email"
                   name="email"
                   placeholder="you@example.com"
-                  onChange={(event) => setReplyTo(event.target.value)}
                   required
                 />
               </label>
@@ -123,12 +137,8 @@ function Contact() {
               {isSubmitting ? "Submitting..." : "Submit"}
               {!isSubmitting && <span aria-hidden="true">→</span>}
             </button>
-            <p
-              className={`contact-form-status ${wasSubmitted ? "success" : ""}`}
-              role="status"
-              aria-live="polite"
-            >
-              {wasSubmitted && "Thanks — your message was submitted successfully. I’ll get back to you soon."}
+            <p className={`contact-form-status ${status.type}`} role="status" aria-live="polite">
+              {status.message}
             </p>
             <p className="contact-form-note">
               Your message will be emailed directly to Ebuka.
