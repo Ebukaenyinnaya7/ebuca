@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./Contact.css";
 
 const CONTACT_EMAIL = "ebukaenyinnaya7@gmail.com";
@@ -7,57 +8,14 @@ const GITHUB_URL = "https://github.com/Ebukaenyinnaya7";
 const WHATSAPP_MESSAGE = "Hi Ebuca I want to create a website";
 
 function Contact() {
-  const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionError, setSubmissionError] = useState("");
+  const [replyTo, setReplyTo] = useState("");
+  const [searchParams] = useSearchParams();
+  const wasSubmitted = searchParams.get("submitted") === "1";
+  const successRedirect = new URL("/contact?submitted=1", window.location.origin).href;
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
-    const senderEmail = payload.email;
-
+  function handleSubmit() {
     setIsSubmitting(true);
-    setSubmissionStatus("idle");
-    setSubmissionError("");
-
-    try {
-      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          ...payload,
-          _subject: `Portfolio enquiry: ${payload.subject}`,
-          _replyto: senderEmail,
-          _template: "table",
-        }),
-      });
-      const responseText = await response.text();
-      let result;
-
-      try {
-        result = JSON.parse(responseText);
-      } catch {
-        throw new Error("The email service returned an unreadable response.");
-      }
-
-      if (!response.ok || !(result.success === true || result.success === "true")) {
-        throw new Error(result.message || result.error || "The message could not be submitted.");
-      }
-
-      form.reset();
-      setSubmissionStatus("success");
-    } catch (error) {
-      setSubmissionError(error instanceof Error ? error.message : "Please try again.");
-      setSubmissionStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
   }
 
   return (
@@ -124,7 +82,15 @@ function Contact() {
         <section className="contact-form-card" aria-labelledby="contact-form-title">
           <span className="contact-form-kicker">YOUR MESSAGE</span>
           <h2 id="contact-form-title">What’s on your mind?</h2>
-          <form onSubmit={handleSubmit}>
+          <form
+            action={`https://formsubmit.co/${CONTACT_EMAIL}`}
+            method="POST"
+            onSubmit={handleSubmit}
+          >
+            <input type="hidden" name="_subject" value="New EBUCA portfolio enquiry" />
+            <input type="hidden" name="_replyto" value={replyTo} />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value={successRedirect} />
             <label className="contact-honeypot" aria-hidden="true">
               Leave this field empty
               <input type="text" name="_honey" tabIndex={-1} autoComplete="off" />
@@ -136,7 +102,13 @@ function Contact() {
               </label>
               <label>
                 Your email
-                <input type="email" name="email" placeholder="you@example.com" required />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  onChange={(event) => setReplyTo(event.target.value)}
+                  required
+                />
               </label>
             </div>
             <label>
@@ -152,17 +124,11 @@ function Contact() {
               {!isSubmitting && <span aria-hidden="true">→</span>}
             </button>
             <p
-              className={`contact-form-status ${submissionStatus}`}
+              className={`contact-form-status ${wasSubmitted ? "success" : ""}`}
               role="status"
               aria-live="polite"
             >
-              {submissionStatus === "success" && "Submitted! Your request was received."}
-              {submissionStatus === "error" && (
-                <>
-                  We couldn’t submit your message: {submissionError} Please try again or email{" "}
-                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-                </>
-              )}
+              {wasSubmitted && "Thanks — your message was submitted successfully. I’ll get back to you soon."}
             </p>
             <p className="contact-form-note">
               Your message will be emailed directly to Ebuka.
