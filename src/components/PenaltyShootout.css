@@ -1,0 +1,228 @@
+.shootout {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px) clamp(56px, 8vw, 96px);
+}
+
+.shootout-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 64px);
+  overflow: hidden;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid rgba(0, 217, 255, 0.26);
+  border-radius: 28px;
+  background: radial-gradient(circle at 0 100%, rgba(0, 217, 255, 0.13), transparent 40%),
+    linear-gradient(145deg, #102f4c, #0a2037);
+}
+
+.shootout-eyebrow {
+  color: #00d9ff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.shootout-copy h2 {
+  margin: 12px 0 14px;
+  color: #f4faff;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.08;
+}
+
+.shootout-copy p {
+  max-width: 400px;
+  color: #c2d7e7;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.shootout-score {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+  color: #c2d7e7;
+  font-size: 14px;
+}
+
+.shootout-score strong {
+  color: #fff;
+  font-size: 22px;
+}
+
+.shootout-score-divider {
+  color: #00d9ff;
+}
+
+.shootout-game {
+  position: relative;
+  min-height: 320px;
+  padding: 34px 24px 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #153d5c 0%, #12536a 48%, #16634e 100%);
+  text-align: center;
+}
+
+.shootout-goal {
+  position: relative;
+  width: min(290px, 76%);
+  height: 148px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 7px solid #effaff;
+  border-bottom-width: 4px;
+  border-radius: 14px 14px 2px 2px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 22px 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.shootout-net {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.shootout-keeper,
+.shootout-ball {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 8px;
+  font-size: 38px;
+  transform: translateX(-50%);
+}
+
+.shootout-keeper {
+  bottom: 32px;
+  font-size: 42px;
+  transition: left 280ms ease;
+}
+
+.keeper-left { left: 18%; }
+.keeper-center { left: 50%; }
+.keeper-right { left: 82%; }
+
+.shootout-ball {
+  z-index: 3;
+  bottom: 4px;
+  font-size: 22px;
+  animation: shootout-kick 520ms cubic-bezier(0.2, 0.75, 0.3, 1) both;
+}
+
+.shot-left .shootout-ball { --shot-x: -92px; }
+.shot-center .shootout-ball { --shot-x: 0px; }
+.shot-right .shootout-ball { --shot-x: 92px; }
+
+@keyframes shootout-kick {
+  to { bottom: 88px; transform: translate(var(--shot-x), 0) scale(0.7); }
+}
+
+.shootout-grass {
+  position: absolute;
+  top: 174px;
+  left: 50%;
+  width: 100px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-bottom: 0;
+  border-radius: 50px 50px 0 0;
+  transform: translateX(-50%);
+}
+
+.shootout-controls {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.shootout-choice,
+.shootout-restart {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(120, 231, 255, 0.4);
+  border-radius: 999px;
+  background: rgba(5, 25, 42, 0.58);
+  color: #effaff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease, border-color 160ms ease;
+}
+
+.shootout-choice:hover:not(:disabled),
+.shootout-choice:focus-visible,
+.shootout-restart:hover,
+.shootout-restart:focus-visible {
+  transform: translateY(-2px);
+  border-color: #72edff;
+  background: rgba(0, 217, 255, 0.2);
+}
+
+.shootout-choice:focus-visible,
+.shootout-restart:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.shootout-choice:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.shootout-result {
+  position: relative;
+  min-height: 22px;
+  margin-top: 14px;
+  color: #e7f8ff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.shootout-restart {
+  position: relative;
+  margin-top: 4px;
+  background: #00c9f0;
+  color: #061a2c;
+}
+
+@media (max-width: 760px) {
+  .shootout-card {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 440px) {
+  .shootout-card {
+    padding: 24px 16px;
+    border-radius: 22px;
+  }
+
+  .shootout-game {
+    min-height: 300px;
+    padding: 28px 10px 18px;
+  }
+
+  .shootout-choice {
+    min-height: 38px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .shootout-grass { top: 168px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shootout-choice,
+  .shootout-keeper { transition: none; }
+
+  .shootout-ball { animation: none; }
+}
