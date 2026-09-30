@@ -7,7 +7,7 @@ const CONTACT_PHONES = ["+2347078399802", "+2347013446978"];
 const GITHUB_URL = "https://github.com/Ebukaenyinnaya7";
 const WHATSAPP_MESSAGE = "Hi Ebuca I want to create a website";
 const EMAILJS_SERVICE_ID = "service_ijuz5a8";
-const EMAILJS_TEMPLATE_ID = "3lowqkd";
+const EMAILJS_TEMPLATE_ID = "template_gnj06js";
 const EMAILJS_PUBLIC_KEY = "56127VtT7fxru0K0l";
 
 function Contact() {
