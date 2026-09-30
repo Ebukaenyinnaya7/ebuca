@@ -34,9 +34,10 @@ function Contact() {
       });
     } catch (error) {
       console.error("EmailJS contact form error:", error);
+      const errorDetail = error?.text || error?.message || "Unknown delivery error";
       setStatus({
         type: "error",
-        message: "Your message couldn’t be sent. Please try again in a moment or email Ebuka directly.",
+        message: `Your message couldn’t be sent (${error?.status || "network error"}): ${errorDetail}. Please try again or email Ebuka directly.`,
       });
     } finally {
       setIsSubmitting(false);
